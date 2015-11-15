@@ -58,8 +58,8 @@ public class WorldCreatePanel extends JPanel implements ActionListener, ItemList
 	/**
 	 * The list of vacuum agents.
 	 */
-	String[] vacuumStrings = { "Random Vacuum Agent", "Reactive Vacuum Agent", ""
-			+ "TiagoAlanAngent1 Vacuum Agent" + "TiagoAlanAngente Vacuum Agent" };
+	String[] vacuumStrings = { "Random Vacuum Agent", "Reactive Vacuum Agent",
+			"TiagoAlanAngent1 Vacuum Agent", "TiagoAlanAngente Vacuum Agent" };
 	/**
 	 * The list of wumpus agents.
 	 */
