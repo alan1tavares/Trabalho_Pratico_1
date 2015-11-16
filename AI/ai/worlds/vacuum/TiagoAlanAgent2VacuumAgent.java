@@ -8,28 +8,71 @@ public class TiagoAlanAgent2VacuumAgent extends VacuumAgent {
 	/**
 	 * Agente baseado em modelos
 	 */
-	
+
 	// Tamanho do ambiente
-	private int i = 1;
-	private int j = 1;
+	private int i = 0;
+	private int j = 0;
 	
+	private int state = 1;
+	private int state2 = 0;
+	private int state3 = 1;
+	private boolean andaUma = false;
+
 	private boolean sabeI = false;
 	private boolean sabeJ = false;
-	
-	private int[] posicaoAtual = {1,1};
-	
-	private boolean[] direcao= {false, false, true, false};
-	// 0 olhando pra cima
-	// 1 olhando para baixo
-	// 2  olhando para direita
-	// 3 olhando para a esquerda
-	
+
+	private int[] posicaoAtual = { 1, 1 };
+
 	@Override
 	public void determineAction() {
 		Vector p = (Vector) percept;
 		//Acao quando encontra sujeira
 		if(p.elementAt(1) == "dirt") action = "suck";
 		
+		else if(p.elementAt(0) != "bump" && state != 0 && state3 !=0){
+			action = "forward";
+			j++;
+		}
+		else if(p.elementAt(0)=="bump" && state != 0){
+			state = 0;
+			
+		}
+		else if(state==0 && i%2==0 && state2==0){
+			action = "turn left";
+			i++;
+			andaUma = true;
+			state2 = 1;
+		}
+		else if(state==0 && i%2!=0 && state2==0){
+			action = "turn right";
+			i++;
+			andaUma = true;
+			state2=1;
+		}else if(andaUma){
+			action = "forward";
+			andaUma = false;
+			if(p.elementAt(0) == "bump"){
+				state3 = 0;
+			}
+		}
+		else if(i%2!=0 && state2==1){
+			action = "turn left";
+			state2=0;
+			state = 1;
+			
+		}
+		else if(i%2==0 && state2==1){
+			action = "turn right";
+			state2=0;
+			state = 1;
+			
+			
+		}
+		
+		
+		
+		
+		/*
 		//Acao para saber a dimensao j{
 		else if (!sabeJ){ 
 			if(p.elementAt(0) == "bump"){
@@ -37,7 +80,6 @@ public class TiagoAlanAgent2VacuumAgent extends VacuumAgent {
 				sabeJ = true;
 				action = "turn left";
 				lastAction = "turn left";
-				atualizarDirecao("cima");
 			} else{
 				action = "forward";
 				j++;
@@ -54,7 +96,6 @@ public class TiagoAlanAgent2VacuumAgent extends VacuumAgent {
 				sabeI = true;
 				action = "turn left";
 				lastAction = "turn left";
-				atualizarDirecao("esquerda");
 			} else{
 				action = "forward";
 				lastAction = "forward";
@@ -74,39 +115,8 @@ public class TiagoAlanAgent2VacuumAgent extends VacuumAgent {
 		else{
 			System.out.println("Caiu a que");
 		}
-		System.out.println("i ->" + i +"\nj ->" + j);
+		//System.out.println("i ->" + i +"\nj ->" + j);
 		
-	}
-	
-	
-	// Metodos privados que vao auxiliar na classe
-	
-	//Usar este metodo para atualizar a direcao
-	private void atualizarDirecao(String direcao){
-		switch (direcao) {
-		case "cima":
-			somenteEssaTrue(0);
-			break;
-		case "baixo":
-			somenteEssaTrue(1);			
-		case "direita":
-			somenteEssaTrue(2);
-			break;
-		case "esquerda":
-			somenteEssaTrue(3);
-		}
-	}
-	
-	private void somenteEssaTrue(int posicao){
-		for (int i2 = 0; i2 < this.direcao.length; j++) {
-			this.direcao[i2] = false;
-			if(i2 == posicao) this.direcao[i2] = true;
-		}
-	}
-	
-	private int qualDirecao(){
-		for (int i2 = 0; i2 < this.direcao.length; i2++) {
-			if(this.direcao[i2]) return i2;
-		}
+	}*/
 	}
 }
