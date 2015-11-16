@@ -59,7 +59,7 @@ public class WorldCreatePanel extends JPanel implements ActionListener, ItemList
 	 * The list of vacuum agents.
 	 */
 	String[] vacuumStrings = { "Random Vacuum Agent", "Reactive Vacuum Agent",
-			"TiagoAlanAngent1 Vacuum Agent", "TiagoAlanAngente Vacuum Agent" };
+			"TiagoAlanAngent1 Vacuum Agent", "TiagoAlanAngente2 Vacuum Agent" };
 	/**
 	 * The list of wumpus agents.
 	 */
@@ -483,7 +483,7 @@ public class WorldCreatePanel extends JPanel implements ActionListener, ItemList
 			return new LogicTestingAgent();
 		else if (agentName == "TiagoAlanAngent1 Vacuum Agent")
 			return new TiagoAlanAgente1VacuumAgent();
-		else if (agentName == "TiagoAlanAngent2 Vacuum Agent")
+		else if (agentName == "TiagoAlanAngente2 Vacuum Agent")
 			return new TiagoAlanAgent2VacuumAgent();
 		else
 			return new AimlessWumpusAgent();
