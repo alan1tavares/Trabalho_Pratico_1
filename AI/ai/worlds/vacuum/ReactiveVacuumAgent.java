@@ -13,7 +13,7 @@ public class ReactiveVacuumAgent extends VacuumAgent
 	 */
     public void determineAction()
     {
-	Vector p = (Vector) percept;
+	Vector p = (Vector) percept;	
 	if (p.elementAt(1) == "dirt") action = "suck";
 	else if (p.elementAt(2) == "home") {
 	    int i = (int)Math.floor(Math.random()*3);

@@ -484,7 +484,7 @@ public class WorldCreatePanel extends JPanel implements ActionListener, ItemList
 		else if (agentName == "TiagoAlanAngent1 Vacuum Agent")
 			return new TiagoAlanAgente1VacuumAgent();
 		else if (agentName == "TiagoAlanAngent2 Vacuum Agent")
-			return new TiagoAlanAgent2AgentVacuum();
+			return new TiagoAlanAgent2VacuumAgent();
 		else
 			return new AimlessWumpusAgent();
 	}
