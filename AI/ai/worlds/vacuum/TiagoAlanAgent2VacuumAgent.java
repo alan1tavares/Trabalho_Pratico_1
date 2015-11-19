@@ -15,9 +15,14 @@ public class TiagoAlanAgent2VacuumAgent extends VacuumAgent {
 	
 	private int state = 1;
 	private int state2 = 0;
-	private int state3 = 1;
+	
+	private int count = 0;
+	private int count2 = 0;
+	
 	private boolean andaUma = false;
 
+	private boolean coringa = true;
+	
 	private boolean sabeI = false;
 	private boolean sabeJ = false;
 
@@ -27,97 +32,105 @@ public class TiagoAlanAgent2VacuumAgent extends VacuumAgent {
 	public void determineAction() {
 		Vector p = (Vector) percept;
 		//Acao quando encontra sujeira
+		
 		if(p.elementAt(1) == "dirt") action = "suck";
 		
-		else if(p.elementAt(0) != "bump" && state != 0 && state3 !=0){
+		//Anda enquanto nao tiver obstaculos
+		else if(p.elementAt(0) != "bump" && state != 0){
 			action = "forward";
 			j++;
-		}
-		else if(p.elementAt(0)=="bump" && state != 0){
-			state = 0;
 			
 		}
-		else if(state==0 && i%2==0 && state2==0){
+		//para no momento do obstaculo
+		else if(p.elementAt(0)=="bump" && state != 0){
+			state = 0;
+			if(p.elementAt(2)=="home"){
+				action="shut-off";
+			}
+			
+		}
+		//primeira rotação caso a linha for par
+		else if(state==0 && i%2==0 && state2==0 && coringa==true){
 			action = "turn left";
 			i++;
 			andaUma = true;
 			state2 = 1;
+			
+			
 		}
-		else if(state==0 && i%2!=0 && state2==0){
+		//primeira rotação caso a linha for impar
+		else if(state==0 && i%2!=0 && state2==0 && coringa==true){
 			action = "turn right";
 			i++;
 			andaUma = true;
 			state2=1;
-		}else if(andaUma){
+			
+			
+		}
+		//sobe apenas uma vez
+		else if(andaUma && coringa==true){
 			action = "forward";
+			
+			
 			andaUma = false;
-			if(p.elementAt(0) == "bump"){
-				state3 = 0;
-			}
+			
 		}
+		//segunda rotação caso a linha for impar 
 		else if(i%2!=0 && state2==1){
-			action = "turn left";
-			state2=0;
-			state = 1;
-			
-		}
-		else if(i%2==0 && state2==1){
-			action = "turn right";
-			state2=0;
-			state = 1;
-			
-			
-		}
-		
-		//teste
-		
-		
-		
-		/*
-		//Acao para saber a dimensao j{
-		else if (!sabeJ){ 
-			if(p.elementAt(0) == "bump"){
-				j--;
-				sabeJ = true;
+			if(p.elementAt(0)=="bump"){
+				
+				state2= 1;
+				count2++;
 				action = "turn left";
-				lastAction = "turn left";
-			} else{
-				action = "forward";
-				j++;
-				lastAction = "forward";
+				if(count2==2){
+					state2=0;
+					state=1;
+					count2=0;
+					coringa = false;
+				}
 			}
-			posicaoAtual[1] = j;
-			
-		} //} Fim da acao para determinar o j
-		
-		// Acao para saber dimensao i
-		else if(!sabeI){
-			if(p.elementAt(0) == "bump"){
-				i--;
-				sabeI = true;
+			else{
 				action = "turn left";
-				lastAction = "turn left";
-			} else{
-				action = "forward";
-				lastAction = "forward";
-				i++;
+				
+				//seta state2 para 0, para fazer apenas uma rotação
+				state2=0;
+				
+				//seta state em 1 para continuar com os forward
+				state = 1;
+				
+				
 			}
 			
-			posicaoAtual[0] = i;
-		}//} Fim da acao para saber a dimensao i
-		
-		// Conjunto de acoes para quando o numero de colunas for par
-		else if(j%2 == 0){
-			if(lastAction == "turn left"){
-					action = "forward";
-					lastAction = "forward";
+			
+		}
+		//segunda rotação caso a linha for par
+		else if(i%2==0 && state2==1 && coringa==true){
+			if(p.elementAt(0)=="bump"){
+				state2=1;
+				count++;
+				action = "turn right";
+				if(count==3){
+					state2=0;
+					state=1;
+					count=0;
+				}
 			}
+			else{
+				action = "turn right";
+				//seta state2 para 0, para fazer apenas uma rotação
+				state2=0;
+				
+				//seta state em 1 para continuar com os forward
+				state = 1;
+				
+				
+			}
+			
+			
 		}
-		else{
-			System.out.println("Caiu a que");
-		}
-		//System.out.println("i ->" + i +"\nj ->" + j);
+
 		
-	}*/
+		
+		
 	}
 }
